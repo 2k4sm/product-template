@@ -1,0 +1,1 @@
+Commercial licenses for using this software without the obligations of the GNU Affero General Public License, version 3, are available from the copyright holder; commercial licensing details will be provided in Tier 5.
