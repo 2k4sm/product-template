@@ -9,7 +9,7 @@ Node.js 26 LTS, Express 4.x, pg, plain HTML/CSS/vanilla JS, node:test.
 - Lint as configured; CI runs both.
 
 ## Run
-- `npm start` — serves on `PORT` (default 3000).
+- `npm start` — serves on `PORT` (default 8080).
 - `GET /healthz` returns 200 `{"status":"ok"}` without touching the database.
 
 ## Migrations

@@ -112,3 +112,20 @@ test("CLA workflow reads the agreement from the current repository", async () =>
     "generated products must not inherit the template repository's CLA URL",
   );
 });
+
+test("documented default port matches the server and environment example", async () => {
+  const [agents, server, envExample] = await Promise.all([
+    read("AGENTS.md"),
+    read("server.js"),
+    read(".env.example"),
+  ]);
+  const documentedPort = agents.match(/`npm start`[^\n]*\(default (\d+)\)/)?.[1];
+  const serverPort = server.match(/process\.env\.PORT\s*\?\?\s*["'](\d+)["']/)?.[1];
+  const examplePort = envExample.match(/^PORT=(\d+)$/m)?.[1];
+
+  assert.ok(documentedPort, "AGENTS.md must document the npm start default port");
+  assert.ok(serverPort, "server.js must define a default PORT");
+  assert.ok(examplePort, ".env.example must define PORT");
+  assert.equal(documentedPort, serverPort);
+  assert.equal(documentedPort, examplePort);
+});
