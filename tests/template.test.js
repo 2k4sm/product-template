@@ -102,3 +102,13 @@ test("CI serializes first publication across native architecture jobs", async ()
     "simultaneous first pushes to a new GHCR package can be denied",
   );
 });
+
+test("CLA workflow reads the agreement from the current repository", async () => {
+  const cla = await read(".github/workflows/cla.yml");
+  assert.ok(
+    cla.includes(
+      "path-to-document: https://github.com/${{ github.repository }}/blob/main/CLA.md",
+    ),
+    "generated products must not inherit the template repository's CLA URL",
+  );
+});
