@@ -91,3 +91,14 @@ test("direct runtime dependencies use exact versions", async () => {
     assert.match(version, /^\d+\.\d+\.\d+$/, `${dependency} must be pinned exactly`);
   }
 });
+
+test("CI serializes first publication across native architecture jobs", async () => {
+  const ci = await read(".github/workflows/ci.yml");
+  const buildJob = ci.split("\n  build:\n")[1]?.split("\n  publish-manifest:\n")[0];
+  assert.ok(buildJob, "the native architecture build job must exist");
+  assert.match(
+    buildJob,
+    /strategy:\s*\n\s*fail-fast: false\s*\n\s*max-parallel: 1\s*\n/,
+    "simultaneous first pushes to a new GHCR package can be denied",
+  );
+});
